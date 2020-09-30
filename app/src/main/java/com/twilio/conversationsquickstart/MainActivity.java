@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements QuickstartConvers
             @Override
             public void onClick(View view) {
                 String messageBody = writeMessageEditText.getText().toString();
-                quickstartConversationsManager.sendChatMessage(messageBody);
+                quickstartConversationsManager.sendMessage(messageBody);
             }
         });
 
