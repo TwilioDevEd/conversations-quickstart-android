@@ -40,8 +40,8 @@ interface AccessTokenListener {
 
 class QuickstartConversationsManager {
 
-    // This is the unique name of the chat channel we are using
-    private final static String DEFAULT_CHANNEL_NAME = "general";
+    // This is the unique name of the conversation  we are using
+    private final static String DEFAULT_CONVERSATION_NAME = "general";
 
     final private ArrayList<Message> messages = new ArrayList<>();
 
@@ -122,7 +122,7 @@ class QuickstartConversationsManager {
         }
     }
 
-    void sendChatMessage(String messageBody) {
+    void sendMessage(String messageBody) {
         if (conversation != null) {
             Message.Options options = Message.options().withBody(messageBody);
             Log.d(MainActivity.TAG,"Message created");
@@ -142,17 +142,17 @@ class QuickstartConversationsManager {
         if (conversationsClient == null || conversationsClient.getMyConversations() == null) {
             return;
         }
-        conversationsClient.getConversation(DEFAULT_CHANNEL_NAME, new CallbackListener<Conversation>() {
+        conversationsClient.getConversation(DEFAULT_CONVERSATION_NAME, new CallbackListener<Conversation>() {
             @Override
             public void onSuccess(Conversation conversation) {
                 if (conversation != null) {
                     if (conversation.getStatus() == Conversation.ConversationStatus.JOINED
                             || conversation.getStatus() == Conversation.ConversationStatus.NOT_PARTICIPATING) {
-                        Log.d(MainActivity.TAG, "Already Exists in Conversation: " + DEFAULT_CHANNEL_NAME);
+                        Log.d(MainActivity.TAG, "Already Exists in Conversation: " + DEFAULT_CONVERSATION_NAME);
                         QuickstartConversationsManager.this.conversation = conversation;
                         QuickstartConversationsManager.this.conversation.addListener(mDefaultConversationListener);
                     } else {
-                        Log.d(MainActivity.TAG, "Joining Conversation: " + DEFAULT_CHANNEL_NAME);
+                        Log.d(MainActivity.TAG, "Joining Conversation: " + DEFAULT_CONVERSATION_NAME);
                         joinConversation(conversation);
                     }
                 }
@@ -168,14 +168,14 @@ class QuickstartConversationsManager {
     }
 
     private void createConversation() {
-        Log.d(MainActivity.TAG, "Creating Conversation: " + DEFAULT_CHANNEL_NAME);
+        Log.d(MainActivity.TAG, "Creating Conversation: " + DEFAULT_CONVERSATION_NAME);
 
-        conversationsClient.createConversation(DEFAULT_CHANNEL_NAME,
+        conversationsClient.createConversation(DEFAULT_CONVERSATION_NAME,
                 new CallbackListener<Conversation>() {
                     @Override
                     public void onSuccess(Conversation conversation) {
                         if (conversation != null) {
-                            Log.d(MainActivity.TAG, "Joining Conversation: " + DEFAULT_CHANNEL_NAME);
+                            Log.d(MainActivity.TAG, "Joining Conversation: " + DEFAULT_CONVERSATION_NAME);
                             joinConversation(conversation);
                         }
                     }
