@@ -7,7 +7,7 @@ This is a lightweight Android application for [Twilio Conversations](https://www
 This demo requires a Twilio account and a working Conversations Service SID.
 Here is what is needed:
 
-* Your Account's Conversation Service Sid `ISXXX` SID which is attached to your Conversation Service. You can find that information in the [Twilio Console](https://www.twilio.com/console/conversations/services). You can also create a service there if you like.
+* Your Account's Conversation Service Sid `ISXXX` SID which is attached to your Conversation Service. You can find that information in the [Twilio Console](https://www.twilio.com/console/conversations/services). You can also create a service there if you don't already have one.
 
 # Replacing the Access Token
 In order for your quickstart application to work, we need to authenticate an end user by retrieving a short-lived access token attached to your API Key. The `strings.xml` resource has a placeholder for your access token named  `test_access_token`.
