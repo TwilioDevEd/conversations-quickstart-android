@@ -57,7 +57,9 @@ public class MainActivity extends AppCompatActivity implements QuickstartConvers
             @Override
             public void onClick(View view) {
                 String messageBody = writeMessageEditText.getText().toString();
-                quickstartConversationsManager.sendMessage(messageBody);
+                if (messageBody.length() > 0) {
+                    quickstartConversationsManager.sendMessage(messageBody);
+                }
             }
         });
 
@@ -97,6 +99,17 @@ public class MainActivity extends AppCompatActivity implements QuickstartConvers
 
     @Override
     public void receivedNewMessage() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                // need to modify user interface elements on the UI thread
+                messagesAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    @Override
+    public void reloadMessages() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {

@@ -19,6 +19,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -27,6 +28,7 @@ import okhttp3.Response;
 interface QuickstartConversationsManagerListener {
     void receivedNewMessage();
     void messageSentCallback();
+    void reloadMessages();
 }
 
 interface TokenResponseListener {
@@ -151,6 +153,7 @@ class QuickstartConversationsManager {
                         Log.d(MainActivity.TAG, "Already Exists in Conversation: " + DEFAULT_CONVERSATION_NAME);
                         QuickstartConversationsManager.this.conversation = conversation;
                         QuickstartConversationsManager.this.conversation.addListener(mDefaultConversationListener);
+                        QuickstartConversationsManager.this.loadPreviousMessages(conversation);
                     } else {
                         Log.d(MainActivity.TAG, "Joining Conversation: " + DEFAULT_CONVERSATION_NAME);
                         joinConversation(conversation);
@@ -205,6 +208,7 @@ class QuickstartConversationsManager {
                 QuickstartConversationsManager.this.conversation = conversation;
                 Log.d(MainActivity.TAG, "Joined default conversation");
                 QuickstartConversationsManager.this.conversation.addListener(mDefaultConversationListener);
+                QuickstartConversationsManager.this.loadPreviousMessages(conversation);
             }
 
             @Override
@@ -212,6 +216,19 @@ class QuickstartConversationsManager {
                 Log.e(MainActivity.TAG, "Error joining conversation: " + errorInfo.getMessage());
             }
         });
+    }
+
+    private void loadPreviousMessages(final Conversation conversation) {
+        conversation.getLastMessages(100,
+                new CallbackListener<List<Message>>() {
+                    @Override
+                    public void onSuccess(List<Message> result) {
+                        messages.addAll(result);
+                        if (conversationsManagerListener != null) {
+                            conversationsManagerListener.reloadMessages();
+                        }
+                    }
+                });
     }
 
     private final ConversationsClientListener mConversationsClientListener =
