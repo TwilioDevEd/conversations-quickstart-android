@@ -56,7 +56,6 @@ class QuickstartConversationsManager {
     private String tokenURL = "";
 
     private class TokenResponse {
-        @SuppressWarnings("unused")
         String token;
     }
 
