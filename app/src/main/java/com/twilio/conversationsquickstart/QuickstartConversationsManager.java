@@ -9,11 +9,11 @@ import com.twilio.conversations.Conversation;
 import com.twilio.conversations.ConversationListener;
 import com.twilio.conversations.ConversationsClient;
 import com.twilio.conversations.ConversationsClientListener;
-import com.twilio.conversations.ErrorInfo;
 import com.twilio.conversations.Participant;
 import com.twilio.conversations.Message;
 import com.twilio.conversations.StatusListener;
 import com.twilio.conversations.User;
+import com.twilio.util.ErrorInfo;
 
 import org.jetbrains.annotations.Nullable;
 
