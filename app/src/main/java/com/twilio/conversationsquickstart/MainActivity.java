@@ -159,7 +159,7 @@ public class MainActivity extends AppCompatActivity implements QuickstartConvers
         @Override
         public void onBindViewHolder(ViewHolder holder, int position) {
             Message message = quickstartConversationsManager.getMessages().get(position);
-            String messageText = String.format("%s: %s", message.getAuthor(), message.getMessageBody());
+            String messageText = String.format("%s: %s", message.getAuthor(), message.getBody());
             holder.messageTextView.setText(messageText);
         }
 

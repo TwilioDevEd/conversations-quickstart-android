@@ -9,11 +9,11 @@ import com.twilio.conversations.Conversation;
 import com.twilio.conversations.ConversationListener;
 import com.twilio.conversations.ConversationsClient;
 import com.twilio.conversations.ConversationsClientListener;
-import com.twilio.conversations.ErrorInfo;
 import com.twilio.conversations.Participant;
 import com.twilio.conversations.Message;
 import com.twilio.conversations.StatusListener;
 import com.twilio.conversations.User;
+import com.twilio.util.ErrorInfo;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -125,9 +125,10 @@ class QuickstartConversationsManager {
 
     void sendMessage(String messageBody) {
         if (conversation != null) {
-            Message.Options options = Message.options().withBody(messageBody);
-            Log.d(MainActivity.TAG,"Message created");
-            conversation.sendMessage(options, new CallbackListener<Message>() {
+            Log.d(MainActivity.TAG,"Sending a message...");
+            conversation.prepareMessage()
+                    .setBody(messageBody)
+                    .buildAndSend(new CallbackListener<Message>() {
                 @Override
                 public void onSuccess(Message message) {
                     if (conversationsManagerListener != null) {
@@ -363,7 +364,7 @@ class QuickstartConversationsManager {
 
         @Override
         public void onMessageUpdated(Message message, Message.UpdateReason updateReason) {
-            Log.d(MainActivity.TAG, "Message updated: " + message.getMessageBody());
+            Log.d(MainActivity.TAG, "Message updated: " + message.getBody());
         }
 
         @Override
